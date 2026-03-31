@@ -31,66 +31,62 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <head>
-        <meta name="theme-color" content="#09090b" />
+        <meta name="theme-color" content="#ffffff" />
       </head>
-      <body className="min-h-screen bg-[#09090b] text-zinc-100 antialiased">
+      <body className="min-h-screen bg-white text-gray-900 antialiased">
         <TRPCReactProvider>
           {/* Nav */}
-          <header className="sticky top-0 z-50 border-b border-zinc-800/60 bg-[#09090b]/90 backdrop-blur-lg backdrop-saturate-150">
+          <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-xl">
             <nav
-              className="mx-auto flex h-12 max-w-[1080px] items-center gap-6 px-5"
+              className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-6"
               aria-label="Main"
             >
-              {/* Logo */}
               <Link
                 href="/"
-                className="mr-2 flex items-center gap-2.5 text-[14px] font-semibold tracking-tight text-white"
+                className="flex items-center gap-2 text-[15px] font-bold tracking-tight text-gray-900"
               >
-                <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white text-[11px] font-bold text-black">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-500 text-[12px] font-extrabold text-white shadow-sm shadow-brand-500/30">
                   T
                 </span>
                 Registry
               </Link>
 
-              {/* Links */}
-              <div className="flex items-center gap-0.5 text-[13px]">
+              <div className="flex items-center gap-1 text-[13px] font-medium">
                 <Link
                   href="/"
-                  className="rounded-md px-2.5 py-1 text-zinc-400 transition-colors hover:bg-zinc-800/60 hover:text-white"
+                  className="rounded-lg px-3 py-1.5 text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-900"
                 >
                   Templates
                 </Link>
                 {session?.user && (
                   <Link
                     href="/projects"
-                    className="rounded-md px-2.5 py-1 text-zinc-400 transition-colors hover:bg-zinc-800/60 hover:text-white"
+                    className="rounded-lg px-3 py-1.5 text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-900"
                   >
-                    Projects
+                    My Projects
                   </Link>
                 )}
               </div>
 
-              {/* Spacer */}
               <div className="flex-1" />
 
-              {/* Auth */}
               {session?.user ? (
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-3">
                   {session.user.image && (
                     <img
                       src={session.user.image}
                       alt={`${session.user.name ?? "User"}'s avatar`}
-                      width={22}
-                      height={22}
-                      className="rounded-full ring-1 ring-zinc-700"
+                      width={28}
+                      height={28}
+                      className="rounded-full ring-2 ring-gray-100"
                     />
                   )}
-                  <span className="hidden text-[13px] text-zinc-500 sm:inline">
+                  <span className="hidden text-[13px] font-medium text-gray-600 sm:inline">
                     {session.user.name}
                   </span>
                   <Link
                     href="/api/auth/signout"
-                    className="rounded-md px-2 py-1 text-[12px] text-zinc-600 transition-colors hover:text-zinc-300"
+                    className="rounded-lg px-2.5 py-1 text-[12px] text-gray-400 transition-colors hover:text-gray-600"
                   >
                     Sign&nbsp;Out
                   </Link>
@@ -98,7 +94,7 @@ export default async function RootLayout({
               ) : (
                 <Link
                   href="/api/auth/signin"
-                  className="rounded-md bg-white px-3 py-1 text-[13px] font-medium text-zinc-900 transition-all hover:bg-zinc-200 active:scale-[0.97]"
+                  className="rounded-lg bg-gray-900 px-4 py-1.5 text-[13px] font-medium text-white shadow-sm transition-all hover:bg-gray-800 active:scale-[0.97]"
                 >
                   Sign&nbsp;In
                 </Link>
@@ -106,9 +102,7 @@ export default async function RootLayout({
             </nav>
           </header>
 
-          <main className="mx-auto max-w-[1080px] px-5 py-8 sm:py-12">
-            {children}
-          </main>
+          <main>{children}</main>
         </TRPCReactProvider>
       </body>
     </html>

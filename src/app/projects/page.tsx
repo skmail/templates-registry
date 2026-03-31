@@ -13,15 +13,17 @@ export default async function ProjectsPage() {
 
   return (
     <HydrateClient>
-      <section className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight text-white">
-          Projects
-        </h1>
-        <p className="mt-1.5 text-[15px] text-gray-500">
-          History of projects scaffolded from templates.
-        </p>
-      </section>
-      <ProjectsList />
+      <div className="mx-auto max-w-5xl px-6 py-10">
+        <section className="mb-8">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+            My Projects
+          </h1>
+          <p className="mt-1 text-[14px] text-gray-500">
+            Everything you've built so far.
+          </p>
+        </section>
+        <ProjectsList />
+      </div>
     </HydrateClient>
   );
 }

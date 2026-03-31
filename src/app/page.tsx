@@ -3,67 +3,68 @@ import { api } from "~/trpc/server";
 
 const TEMPLATE_META: Record<
   string,
-  { gradient: string; icon: React.ReactNode; tags: string[] }
+  {
+    bg: string;
+    iconBg: string;
+    iconText: string;
+    accent: string;
+    accentHover: string;
+    glow: string;
+    tags: string[];
+    tagline: string;
+  }
 > = {
   nextjs: {
-    gradient: "from-zinc-900 via-zinc-800 to-zinc-900",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 180 180" fill="none" aria-hidden="true">
-        <mask id="a" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180">
-          <circle cx="90" cy="90" r="90" fill="#000" />
-        </mask>
-        <g mask="url(#a)">
-          <circle cx="90" cy="90" r="90" fill="#000" />
-          <path d="M149.508 157.52L69.142 54H54v71.97h12.114V69.384l73.885 95.461a90.304 90.304 0 009.509-7.325z" fill="url(#b)" />
-          <rect x="115" y="54" width="12" height="72" fill="url(#c)" />
-        </g>
-        <defs>
-          <linearGradient id="b" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#fff" />
-            <stop offset="1" stopColor="#fff" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="c" x1="121" y1="54" x2="120.799" y2="106.875" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#fff" />
-            <stop offset="1" stopColor="#fff" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
-    ),
+    bg: "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900",
+    iconBg: "bg-white",
+    iconText: "text-gray-900",
+    accent: "text-white",
+    accentHover: "group-hover:text-blue-300",
+    glow: "group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]",
     tags: ["Next.js", "tRPC", "Prisma", "Tailwind"],
+    tagline: "Full-stack, type-safe, ready to ship",
   },
   "express-api": {
-    gradient: "from-emerald-950 via-emerald-900/80 to-zinc-900",
-    icon: (
-      <span className="text-xl font-bold text-emerald-400" aria-hidden="true">
-        Ex
-      </span>
-    ),
+    bg: "bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-600",
+    iconBg: "bg-white",
+    iconText: "text-emerald-600",
+    accent: "text-white",
+    accentHover: "group-hover:text-emerald-100",
+    glow: "group-hover:shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)]",
     tags: ["Express", "TypeScript", "Bun"],
+    tagline: "Lightweight API, zero bloat",
   },
   "threejs-vite": {
-    gradient: "from-violet-950 via-indigo-900/80 to-zinc-900",
-    icon: (
-      <span className="text-xl font-bold text-violet-400" aria-hidden="true">
-        3D
-      </span>
-    ),
+    bg: "bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-700",
+    iconBg: "bg-white",
+    iconText: "text-violet-600",
+    accent: "text-white",
+    accentHover: "group-hover:text-violet-200",
+    glow: "group-hover:shadow-[0_20px_60px_-15px_rgba(139,92,246,0.3)]",
     tags: ["Three.js", "React", "Vite", "Tailwind"],
+    tagline: "Bring ideas to life in 3D",
   },
   "autonomous-agents": {
-    gradient: "from-amber-950 via-orange-900/80 to-zinc-900",
-    icon: (
-      <span className="text-xl font-bold text-amber-400" aria-hidden="true">
-        Ag
-      </span>
-    ),
+    bg: "bg-gradient-to-br from-orange-400 via-rose-500 to-pink-600",
+    iconBg: "bg-white",
+    iconText: "text-rose-600",
+    accent: "text-white",
+    accentHover: "group-hover:text-orange-100",
+    glow: "group-hover:shadow-[0_20px_60px_-15px_rgba(244,63,94,0.3)]",
     tags: ["Claude", "Agents", "Workflow"],
+    tagline: "Let AI build it for you",
   },
 };
 
-const FALLBACK_META = {
-  gradient: "from-zinc-800 to-zinc-900",
-  icon: <span className="text-xl font-bold text-zinc-400" aria-hidden="true">?</span>,
+const FALLBACK = {
+  bg: "bg-gradient-to-br from-gray-400 to-gray-500",
+  iconBg: "bg-white",
+  iconText: "text-gray-600",
+  accent: "text-white",
+  accentHover: "",
+  glow: "",
   tags: [] as string[],
+  tagline: "",
 };
 
 export default async function Home() {
@@ -72,101 +73,105 @@ export default async function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="mb-10">
-        <h1
-          className="text-[28px] font-semibold tracking-tight text-white sm:text-[32px]"
-          style={{ textWrap: "balance" } as React.CSSProperties}
-        >
-          Start building faster
-        </h1>
-        <p className="mt-2 max-w-lg text-[15px] leading-relaxed text-zinc-500">
-          Production-ready project templates. Pick one, fill in the details, and
-          have a fully configured project in seconds.
-        </p>
+      <section className="relative overflow-hidden border-b border-gray-100 bg-gradient-to-b from-brand-50/60 via-white to-white">
+        {/* Decorative blobs */}
+        <div className="pointer-events-none absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-brand-200/30 blur-3xl" aria-hidden="true" />
+        <div className="pointer-events-none absolute -top-12 right-1/4 h-72 w-72 rounded-full bg-violet-200/20 blur-3xl" aria-hidden="true" />
+        <div className="pointer-events-none absolute bottom-0 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-emerald-200/15 blur-3xl" aria-hidden="true" />
+
+        <div className="relative mx-auto max-w-5xl px-6 pb-16 pt-20 text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-200/60 bg-brand-50 px-3 py-1 text-[12px] font-semibold text-brand-600">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+            {templates.length} templates ready to go
+          </div>
+          <h1
+            className="mx-auto max-w-2xl text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl"
+            style={{ textWrap: "balance" } as React.CSSProperties}
+          >
+            What will you{" "}
+            <span className="bg-gradient-to-r from-brand-500 to-violet-500 bg-clip-text text-transparent">
+              build
+            </span>{" "}
+            today?
+          </h1>
+          <p
+            className="mx-auto mt-4 max-w-lg text-[16px] leading-relaxed text-gray-500"
+            style={{ textWrap: "pretty" } as React.CSSProperties}
+          >
+            Production-ready templates, configured in seconds. Pick a stack,
+            name your project, and start coding.
+          </p>
+        </div>
       </section>
 
-      {/* Template grid */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        {templates.map((template) => {
-          const meta = TEMPLATE_META[template.id] ?? FALLBACK_META;
-          return (
-            <Link
-              key={template.id}
-              href={`/templates/${template.id}`}
-              className="card-glow group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/50 transition-all duration-200 hover:border-zinc-700/80 hover:shadow-[0_0_40px_-12px_rgba(255,255,255,0.06)]"
-            >
-              {/* Colored banner */}
-              <div
-                className={`relative flex h-28 items-center justify-center bg-gradient-to-r ${meta.gradient}`}
+      {/* Templates */}
+      <section className="mx-auto max-w-5xl px-6 py-12">
+        <div className="grid gap-5 sm:grid-cols-2">
+          {templates.map((template) => {
+            const meta = TEMPLATE_META[template.id] ?? FALLBACK;
+            return (
+              <Link
+                key={template.id}
+                href={`/templates/${template.id}`}
+                className={`group relative overflow-hidden rounded-xl ${meta.bg} ${meta.glow} p-4 shadow-md transition-all duration-300 hover:-translate-y-0.5`}
               >
-                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-xl bg-black/30 backdrop-blur-sm ring-1 ring-white/10">
-                  {meta.icon}
-                </div>
-                {/* Subtle noise texture */}
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                  style={{
-                    backgroundImage:
-                      "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
-                  }}
-                  aria-hidden="true"
-                />
-              </div>
+                {/* Decorative shapes */}
+                <div className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-white/[0.07]" aria-hidden="true" />
+                <div className="pointer-events-none absolute -bottom-4 -left-4 h-16 w-16 rounded-full bg-white/[0.05]" aria-hidden="true" />
 
-              {/* Content */}
-              <div className="relative z-10 p-5">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-[15px] font-semibold text-white">
-                    {template.name}
-                  </h2>
-                  <span className="rounded-full bg-zinc-800 px-2 py-0.5 font-mono text-[10px] text-zinc-500">
-                    v{template.version}
-                  </span>
-                </div>
-                <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-zinc-500">
-                  {template.description}
-                </p>
-
-                {/* Tags */}
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {meta.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-md bg-zinc-800/80 px-2 py-0.5 text-[11px] font-medium text-zinc-400"
-                    >
-                      {tag}
+                <div className="relative flex items-start gap-3.5">
+                  {/* Icon */}
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${meta.iconBg} shadow`}>
+                    <span className={`text-sm font-extrabold ${meta.iconText}`}>
+                      {template.name.charAt(0)}
                     </span>
-                  ))}
-                </div>
+                  </div>
 
-                {/* Footer */}
-                <div className="mt-4 flex items-center justify-between border-t border-zinc-800/60 pt-3">
-                  <span className="tabular-nums text-[12px] text-zinc-600">
-                    {template.stepCount}&nbsp;steps
-                  </span>
-                  <span className="flex items-center gap-1 text-[12px] text-zinc-600 transition-colors group-hover:text-zinc-300">
-                    Set up
-                    <svg
-                      className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                      />
-                    </svg>
-                  </span>
+                  {/* Text */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <h2 className="truncate text-[14px] font-bold text-white">
+                        {template.name}
+                      </h2>
+                      <span className="shrink-0 rounded-full bg-white/20 px-1.5 py-0.5 font-mono text-[9px] font-medium text-white/60">
+                        v{template.version}
+                      </span>
+                    </div>
+
+                    <p className="mt-0.5 text-[12px] font-medium text-white/70">
+                      {meta.tagline}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="mt-2.5 flex flex-wrap gap-1">
+                      {meta.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold text-white/75"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Arrow */}
+                  <svg
+                    className="mt-1 h-4 w-4 shrink-0 text-white/40 transition-transform group-hover:translate-x-0.5 group-hover:text-white/70"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2.5}
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
                 </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }
