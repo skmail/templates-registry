@@ -1,0 +1,51 @@
+{
+  "name": "T3 Next.js",
+  "description": "A Next.js template with TypeScript, Tailwind CSS, and Prisma.",
+  "version": "1.0.0",
+  "steps": [
+    {
+      "name": "Create Next.js App",
+      "label": "Create a new Next.js app with TypeScript, ESLint, Tailwind CSS, and Prisma.",
+      "type": "bash",
+      "command": "bun create t3-app@latest {project} --CI --trpc --prisma --nextAuth --tailwind --dbProvider postgres --appRouter"
+    },
+    {
+      "name": "replace discord",
+      "label": "Replace Discord auth variables with GitHub auth variables",
+      "type": "replace",
+      "files": ["src/env.js", ".env"],
+      "replace": [
+        ["AUTH_DISCORD_ID", "AUTH_GITHUB_ID"],
+        ["AUTH_DISCORD_SECRET", "AUTH_GITHUB_SECRET"],
+        ["Discord", "GitHub"]
+      ]
+    },
+
+    {
+      "name": "replace discord provider",
+      "label": "Replace Discord auth variables with GitHub auth variables",
+      "type": "replace",
+      "files": ["src/server/auth/config.ts"],
+      "replace": [
+        [
+          "import DiscordProvider from \"next-auth/providers/discord\";",
+          "import GitHubProvider from \"next-auth/providers/github\";"
+        ],
+        ["DiscordProvider", "GitHubProvider"]
+      ]
+    },
+    {
+      "name": "Setup github env",
+      "label": "Set up GitHub Client ID and Secret in .env file",
+      "type": "set-env",
+      "vars": ["AUTH_GITHUB_ID", "AUTH_GITHUB_SECRET"],
+      "quoted": true
+    },
+    {
+      "name": "copy files",
+      "label": "Copy files",
+      "type": "copy",
+      "files": [["./", "./"]]
+    }
+  ]
+}

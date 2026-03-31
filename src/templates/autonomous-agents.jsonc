@@ -1,0 +1,41 @@
+{
+  "name": "Autonomous Agents",
+  "description": "Scaffolds a .claude/ folder with agent instruction files that guide Claude Code through 6 autonomous phases: Research → Design → Architecture → Planning → Tests → Build.",
+  "version": "1.0.0",
+  "variables": [
+    {
+      "name": "idea",
+      "message": "Describe your app idea (e.g., \"an app like Figma for collaborative whiteboarding\")"
+    }
+  ],
+  "steps": [
+    {
+      "name": "create directory",
+      "label": "Create project directory",
+      "type": "bash",
+      "command": "mkdir -p {project}"
+    },
+    {
+      "name": "copy files",
+      "label": "Copy agent instruction files",
+      "type": "copy",
+      "files": [["./", "./"]],
+      "dependsOn": ["create directory"]
+    },
+    {
+      "name": "inject idea",
+      "label": "Inject app idea into CLAUDE.md",
+      "type": "replace",
+      "files": ["CLAUDE.md"],
+      "replace": [["__IDEA_DESCRIPTION__", "{idea}"]],
+      "dependsOn": ["copy files"]
+    },
+    {
+      "name": "git init",
+      "label": "Initialize git repository",
+      "type": "bash",
+      "command": "cd {project} && git init && git add -A && git commit -m \"Initial scaffold from autonomous-agents template\"",
+      "dependsOn": ["inject idea"]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Express API",
+  "description": "A minimal Express.js API starter with TypeScript.",
+  "version": "1.0.0",
+  "variables": [
+    {
+      "name": "port",
+      "message": "Which port should the server listen on?",
+      "default": "3000"
+    }
+  ],
+  "steps": [
+    {
+      "name": "create project",
+      "label": "Create project directory and initialize package.json",
+      "type": "bash",
+      "command": "mkdir -p {project} && cd {project} && bun init -y"
+    },
+    {
+      "name": "install dependencies",
+      "label": "Install Express and TypeScript dependencies",
+      "type": "bash",
+      "command": "cd {project} && bun add express && bun add -d @types/express",
+      "dependsOn": ["create project"]
+    },
+    {
+      "name": "copy files",
+      "label": "Copy template source files",
+      "type": "copy",
+      "files": [
+        ["src/index.ts", "src/index.ts"],
+        ["AGENTS.md", "AGENTS.md"]
+      ],
+      "dependsOn": ["create project"]
+    },
+    {
+      "name": "set port",
+      "label": "Replace port placeholder with user-selected port",
+      "type": "replace",
+      "files": ["src/index.ts"],
+      "replace": [["__PORT__", "{port}"]],
+      "dependsOn": ["copy files"]
+    }
+  ]
+}

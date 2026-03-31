@@ -1,0 +1,71 @@
+{
+  "name": "Three.js (Vite)",
+  "description": "A Vite + React Three Fiber starter with Three.js, Tailwind CSS, and shadcn/ui.",
+  "version": "1.0.0",
+  "steps": [
+    {
+      "name": "create project",
+      "label": "Scaffold a new Vite + React + TypeScript project",
+      "type": "bash",
+      "command": "bun create vite {project} --template react-ts --no-interactive"
+    },
+    {
+      "name": "install deps",
+      "label": "Install Three.js, React Three Fiber, Drei, Tailwind CSS, and dev dependencies",
+      "type": "bash",
+      "command": "cd {project} && bun add three @react-three/fiber @react-three/drei tailwindcss @tailwindcss/vite && bun add -d @types/three @types/node",
+      "dependsOn": ["create project"]
+    },
+    {
+      "name": "copy starter files",
+      "label": "Copy starter 3D scene and config files",
+      "type": "copy",
+      "files": [
+        ["src/App.tsx", "src/App.tsx"],
+        ["src/App.css", "src/App.css"],
+        ["src/index.css", "src/index.css"],
+        ["vite.config.ts", "vite.config.ts"],
+        ["CLAUDE.md", "CLAUDE.md"]
+      ],
+      "dependsOn": ["create project"]
+    },
+    {
+      "name": "configure tsconfig paths",
+      "label": "Add path aliases to TypeScript config for shadcn",
+      "type": "replace",
+      "files": ["tsconfig.json"],
+      "replace": [
+        [
+          "\"files\": []",
+          "\"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  },\n  \"files\": []"
+        ]
+      ],
+      "dependsOn": ["create project"]
+    },
+    {
+      "name": "configure tsconfig app paths",
+      "label": "Add path aliases to tsconfig.app.json for shadcn",
+      "type": "replace",
+      "files": ["tsconfig.app.json"],
+      "replace": [
+        [
+          "\"compilerOptions\": {",
+          "\"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    },"
+        ]
+      ],
+      "dependsOn": ["create project"]
+    },
+    {
+      "name": "init shadcn",
+      "label": "Initialize shadcn/ui with default configuration",
+      "type": "bash",
+      "command": "cd {project} && npx -y shadcn@latest init -d",
+      "dependsOn": [
+        "install deps",
+        "copy starter files",
+        "configure tsconfig paths",
+        "configure tsconfig app paths"
+      ]
+    }
+  ]
+}
