@@ -2,15 +2,13 @@ import path from "path";
 
 const TEMPLATE_EXTENSIONS = ["json", "jsonc"] as const;
 
-export type TemplateExtension = (typeof TEMPLATE_EXTENSIONS)[number];
-
 export { TEMPLATE_EXTENSIONS };
 
 export function getTemplatesDir(): string {
   return path.join(process.cwd(), "src/templates");
 }
 
-export function getTemplatePath(
+function getTemplatePath(
   templateName: string,
   ...parts: string[]
 ): string {
@@ -25,7 +23,7 @@ export function getTemplatePath(
 
 export function getTemplateFile(
   templateName: string,
-  ext: TemplateExtension,
+  ext: (typeof TEMPLATE_EXTENSIONS)[number],
 ): string {
   return path.join(getTemplatesDir(), `${templateName}.${ext}`);
 }
